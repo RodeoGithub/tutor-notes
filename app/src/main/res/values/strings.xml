@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tutor Notes</string>
+    <string name="userType_student">Estudiante</string>
+    <string name="userType_preceptor">Preceptor</string>
+    <string name="userType_tutor">Tutor</string>
 </resources>
