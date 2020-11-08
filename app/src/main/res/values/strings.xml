@@ -3,4 +3,11 @@
     <string name="userType_student">Estudiante</string>
     <string name="userType_preceptor">Preceptor</string>
     <string name="userType_tutor">Tutor</string>
+    <string name="phone">Numero de Telefono</string>
+    <string name="sign_in">Entrar</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="passHint">Contraseña</string>
+    <string name="userCode">Codigo de Verificación</string>
+    <string name="welcomeText">Welcome!</string>
+    <string name="VerificationCode">Verificar</string>
 </resources>
