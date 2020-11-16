@@ -26,7 +26,7 @@ public class Courses {
         this.shift = shift;
         this.code = code;
     }
-
+    //getters and setters
     public String getTitle() {
         return title;
     }

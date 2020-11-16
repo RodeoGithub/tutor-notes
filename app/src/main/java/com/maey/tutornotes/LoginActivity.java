@@ -23,29 +23,40 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth;
-    //private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private static final int STATE_INITIALIZED = 1;
+    private static final int STATE_CODE_SENT = 2;
+    private static final int STATE_VERIFY_FAILED = 3;
+    private static final int STATE_VERIFY_SUCCESS = 4;
+    private static final int STATE_SIGNIN_FAILED = 5;
+    private static final int STATE_SIGNIN_SUCCESS = 6;
+
+    private FirebaseAuth mAuth;
+    private boolean mVerificationInProgress = false;
+    private String mVerificationId;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
+
     private EditText mUserPhone;
     private EditText mVerificationCode;
     private String mPhoneNumber;
     private Button mSignUpButton;
     private Button mSignInButton;
-    private String mVerificationId;
     private Button mVerifyCodeButton;
-
-    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        initializeFirebaseAuth();
+        //Initializing Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
+        //Binding Buttons and text fields
         mUserPhone = (EditText) findViewById(R.id.userPhone);
         mVerificationCode = (EditText) findViewById(R.id.verificationCode);
         mVerifyCodeButton = (Button) findViewById(R.id.verifyCodeButton);
         mSignInButton = (Button) findViewById(R.id.signInButton);
+
+
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +84,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "sign up", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mVerifyCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verifyVerificationCode(mVerificationCode.getText().toString());
+            }
+        });
     }
 
     private void sendVerificationCode(String phoneNumber) {
@@ -80,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 "+54" + phoneNumber,
                 60,
                 TimeUnit.SECONDS,
-                TaskExecutors.MAIN_THREAD,
+                this,
                 mCallbacks);
     }
 
@@ -116,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mFirebaseAuth.signInWithCredential(credential).addOnCompleteListener(LoginActivity.this,
+        mAuth.signInWithCredential(credential).addOnCompleteListener(LoginActivity.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -127,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else {
                              //verification unsuccessful, display an error message
-                            String message = "Somthing is wrong, we will fix it soon...";
+                            String message = "Something is wrong, we will fix it soon...";
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 message = "Invalid code entered...";
@@ -148,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean checkMobilePhone() {
         mPhoneNumber = mUserPhone.getText().toString().trim();
+        //mPhoneNumber = "+543624205074";
 
         if(mPhoneNumber.isEmpty() || mPhoneNumber.length() < 10){
             Toast.makeText(LoginActivity.this, "Ingrese un número de teléfono válido", Toast.LENGTH_SHORT).show();
@@ -157,7 +176,4 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initializeFirebaseAuth() {
-        mFirebaseAuth = FirebaseAuth.getInstance();
-    }
 }

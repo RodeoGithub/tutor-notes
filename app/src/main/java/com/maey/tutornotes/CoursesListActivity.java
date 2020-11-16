@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.maey.tutornotes.controller.ItemClickSupport;
 import com.maey.tutornotes.controller.RecyclerViewAdapter;
 import com.maey.tutornotes.model.Courses;
 
@@ -38,6 +43,17 @@ public class CoursesListActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_courses);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
+        ItemClickSupport.addTo(mRecyclerView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                       /*
+                        Intent i = new Intent (CoursesListActivity.this, NotesActivity.class);
+                        startActivity(new Intent ());
+                        */
+                        Toast.makeText(getApplicationContext(),"Item Clicked at position: " + position, Toast.LENGTH_LONG).show();
+                    }
+                });
         mCoursesList = new ArrayList<>();
         ClearList();
         getCoursesListFromFirebase();
