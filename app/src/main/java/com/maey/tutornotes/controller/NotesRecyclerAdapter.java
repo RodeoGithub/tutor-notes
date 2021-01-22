@@ -11,24 +11,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.maey.tutornotes.R;
 import com.maey.tutornotes.model.Courses;
+import com.maey.tutornotes.model.Note;
 
 import java.util.ArrayList;
 
+public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdapter.ViewHolder> {
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
-    private static final String TAG = "Recycler view";
+    private static final String TAG = "Notes Recycler View";
     private Context mContext;
-    private ArrayList<Courses> mCoursesList;
+    private ArrayList<Note> mNotesList;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Courses> coursesList) {
+    public NotesRecyclerAdapter(Context context, ArrayList<Note> notesList) {
         mContext = context;
-        mCoursesList = coursesList;
+        mNotesList = notesList;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NotesRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.courses_item, parent, false);
         return new ViewHolder(view);
@@ -36,12 +36,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(mCoursesList.get(position).getName());
+        holder.textView.setText(mNotesList.get(position).getText());
     }
 
     @Override
     public int getItemCount() {
-        return mCoursesList.size();
+        return mNotesList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

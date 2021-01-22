@@ -10,4 +10,8 @@
     <string name="userCode">Codigo de Verificación</string>
     <string name="welcomeText">Welcome!</string>
     <string name="VerificationCode">Verificar</string>
+    <string name="com.maey.tutornotes.PREFERENCE_FILE_KEY">preference_file_key</string>
+    <string name="preference_file_key">com.maey.tutornotes.PREFERENCE_FILE_KEY</string>
+    <string name="choose_user_type">Selecciona el que corresponda</string>
+    <string name="new_note_actionbar_name">Crear Nota</string>
 </resources>

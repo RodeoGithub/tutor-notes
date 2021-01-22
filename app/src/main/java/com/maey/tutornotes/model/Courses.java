@@ -2,16 +2,12 @@ package com.maey.tutornotes.model;
 
 import android.util.Log;
 
-import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
-import com.maey.tutornotes.model.RandomString;
 
 public class Courses {
 
     //Properties
-    private String title;
+    private String name;
     private String shift;
     private String code;
 
@@ -21,18 +17,18 @@ public class Courses {
     public Courses() {
     }
 
-    public Courses(String title, String shift, String code) {
-        this.title = title;
+    public Courses(String name, String shift, String code) {
+        this.name = name;
         this.shift = shift;
         this.code = code;
     }
     //getters and setters
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getShift() {
@@ -52,7 +48,7 @@ public class Courses {
     }
 
     //Methods
-    public static String addNewCourse() {
+    public static String generateCourseCode() {
         RandomString code = new RandomString(5, ThreadLocalRandom.current());
         Log.d("code: ", code.nextString());
         return code.nextString();
